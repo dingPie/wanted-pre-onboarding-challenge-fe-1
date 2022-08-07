@@ -30,7 +30,7 @@ const modeSet = css<IMainBtn>`
 export const MainBtn = styled.button<IMainBtn>`
 /* 크기 */
   width:${({width}) => width ? width+"rem" : "5rem" };
-  height: 1.5rem;
+  height: 2rem;
   padding: 0;
   border-radius: 4px;
   border: none;
@@ -59,6 +59,7 @@ interface ICustomBtn {
   bold?: boolean;
   center?: boolean;
   height?: number;
+  onPolish?: boolean;
 }
 
 export const CustomBtn = styled.button<ICustomBtn>`
@@ -80,14 +81,10 @@ export const CustomBtn = styled.button<ICustomBtn>`
   box-shadow: ${({theme}) => theme.boxShadow.main };
   /* 색상 */
   color: ${({color}) => color && color };
-  ${polishedColor}
 
-  
-  /* overflow 속성 */
-  /* display: -webkit-box;
-  overflow-y: hidden;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  text-overflow: ellipsis;
-  white-space: nowrap; */
+  ${({ onPolish }) => {
+    return css`
+      ${onPolish && polishedColor};
+    `
+  }}
 `
