@@ -6,11 +6,13 @@ import { useNavigate } from "react-router-dom";
 
 interface ICreateContainer {
   setIsOpenCreatePopup: (v: boolean) => void;
+  setIdToken: (v: string | null) => void;
 }
 
 
 const CreateContainer = ( {
-  setIsOpenCreatePopup
+  setIsOpenCreatePopup,
+  setIdToken
 }: ICreateContainer ) => {
 
   const navigate = useNavigate();
@@ -75,6 +77,7 @@ const CreateContainer = ( {
       alert(res.data.message)
       setIsOpenCreatePopup(false)
       localStorage.setItem("idToken", res.data.token);
+      setIdToken(res.data.token)
       navigate('/', {replace: true});
     } catch (e) {
       alert("이미 가입된 아이디가 있습니다.")

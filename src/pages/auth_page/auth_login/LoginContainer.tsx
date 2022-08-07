@@ -6,11 +6,13 @@ import LoginPresenter from "./LoginPresenter";
 
 interface ILoginContainer {
   setIsOpenCreatePopup: (v: boolean) => void;
+  setIdToken: (v: string | null) => void;
 }
 
 
 const LoginContainer = ( {
-  setIsOpenCreatePopup
+  setIsOpenCreatePopup,
+  setIdToken
 }: ILoginContainer ) => {
 
   const navigate = useNavigate();
@@ -70,6 +72,7 @@ const LoginContainer = ( {
     try {
       const res = await axios.post(url, params );
       localStorage.setItem("idToken", res.data.token);
+      setIdToken(res.data.token);
       navigate('/', {replace: true});
     } catch (e) {
       alert("아이디 / 비밀번호가 잘못되었습니다.")
