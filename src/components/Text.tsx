@@ -7,6 +7,7 @@ interface IText {
   bold?: boolean;
   width?: number;
   height?: number;
+  lineHeight?: number;
   padding?: string;
   color?: string;
   bgColor?: string;
@@ -30,6 +31,7 @@ const TextComponent = ( {
   bold,
   width,
   height,
+  lineHeight,
   padding,
   color, 
   bgColor, 
@@ -52,6 +54,7 @@ const TextComponent = ( {
       bold={bold}
       width={width}
       height={height}
+      lineHeight={lineHeight}
       padding={padding}
       color={color} 
       bgColor={bgColor} 
@@ -76,7 +79,7 @@ const Text = styled.div<IText>`
   // 크기
   width: ${({width}) => width && width+"rem" };
   height: ${({height}) => height && height+"rem" };
-  line-height: ${({height}) => height && height+"rem" };
+  line-height: ${({lineHeight}) => lineHeight && lineHeight+"rem" };
   padding: ${({padding}) => padding ? padding : ".5rem"};
   margin: ${({margin}) => margin && margin };
 

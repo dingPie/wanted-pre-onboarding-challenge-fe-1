@@ -35,7 +35,6 @@ const CreatePresenter = forwardRef<HTMLButtonElement, ICreatePresenter>(( {
   return(
     <Outer>
       <Inner>
-
         <Text
           bold
           fontSize="2x"
@@ -100,13 +99,7 @@ const CreatePresenter = forwardRef<HTMLButtonElement, ICreatePresenter>(( {
 export default CreatePresenter;
 
 
-interface IInner {
-  gap?: number;
-  zIndex?: number;
-  noBackground?: boolean;
-}
-
-const Inner = styled.div<IInner>`
+const Inner = styled.div`
   // 정렬
   position: absolute;
   display: flex;
@@ -117,9 +110,8 @@ const Inner = styled.div<IInner>`
   // size
   width: 720px;
   padding: 2rem 3.75rem;
-  box-shadow: ${({theme, noBackground}) => !noBackground ? theme.boxShadow.main : "none" };
   
-  z-index:${({zIndex}) => zIndex ? zIndex : 3 };
+  z-index: 3;
   background: white;
   border-radius: .25rem;
   ${center}

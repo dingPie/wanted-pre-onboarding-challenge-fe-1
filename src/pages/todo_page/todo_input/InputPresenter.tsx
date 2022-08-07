@@ -28,6 +28,7 @@ const InputPresenter = ( {
   <ColBox
   >
     <ColBox
+      padding="0"
     >
       <Text>
         제목
@@ -50,6 +51,7 @@ const InputPresenter = ( {
     </ColBox>
 
     <ColBox
+      padding="0"
     >
       <Text>
         내용

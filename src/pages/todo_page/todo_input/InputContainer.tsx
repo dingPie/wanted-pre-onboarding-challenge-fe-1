@@ -1,14 +1,19 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { ITodo } from "../../../utils/dataType";
 import InputPresenter from "./InputPresenter";
 
 interface IInputContainer {
-  idToken: string
+  idToken: string;
+  todos: ITodo[];
+  setTodos: (todos:  ITodo[]) => void;
 }
 
 
 const InputContainer = ( {
-  idToken
+  idToken,
+  todos,
+  setTodos
 }: IInputContainer ) => {
 
   const [inputTitle, setInputTitle] = useState("")
@@ -39,6 +44,7 @@ const InputContainer = ( {
     }
     try {
       const res = await axios.post(url, params, config);
+      setTodos([...todos, res.data.data])
       console.log("추가 완료", res.data)
     } catch (e) {
       console.log(e)
@@ -48,9 +54,6 @@ const InputContainer = ( {
     setInputContent("")
   }
 
-
-  useEffect(() => {
-  }, [])
   
 
 
