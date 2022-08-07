@@ -2,22 +2,22 @@ import React, { forwardRef, memo } from "react";
 import styled from "styled-components";
 
 
-interface IInputText extends IInputTextEle {
+interface IInputPW extends IInputPWEle {
   value?: string;
   name?: string;
   defaultValue?: string;
   placeholder?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement> ) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 
-export const InputText = memo(forwardRef<HTMLInputElement, IInputText>(( {
+export const InputPW = memo(forwardRef<HTMLInputElement, IInputPW>(( {
   value, name, defaultValue, placeholder, onChange, onKeyPress, width, height
 }, ref) => {
   
   return(
-    <InputTextEle
+    <InputPWEle
       ref={ref}
       value={value}
       name={name}
@@ -33,12 +33,12 @@ export const InputText = memo(forwardRef<HTMLInputElement, IInputText>(( {
 
 
 
-interface IInputTextEle {
+interface IInputPWEle {
   width?: number;
   height?: number;
 }
 
-const InputTextEle = styled.input<IInputTextEle>`  //["attrs"]
+const InputPWEle = styled.input.attrs({type: "password"})<IInputPWEle>`  //["attrs"]
   width:${({width}) => width ? width+"rem": "100%" };
   height: ${({height}) => height ? height+"rem": "2.25rem" };
 

@@ -54,7 +54,7 @@ export const RowBox = styled.div<IFlexPosition>`
 export const ColBox = styled.div<IFlexPosition>`
   display: flex;
   flex-direction: column;
-  gap: ${({gap}) => gap ? gap+"rem" : ".5rem"};
+  gap: ${({gap}) => gap ? gap+"rem" : "0"};
 
   width: ${({width}) => width ? width+"rem" : "100%"};
   padding: ${({padding}) => padding ? padding : ".75rem 0"};
