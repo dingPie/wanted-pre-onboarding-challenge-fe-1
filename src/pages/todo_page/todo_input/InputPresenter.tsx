@@ -26,6 +26,7 @@ const InputPresenter = ( {
 
   return(
   <ColBox
+    padding=".5rem"
   >
     <ColBox
       padding="0"

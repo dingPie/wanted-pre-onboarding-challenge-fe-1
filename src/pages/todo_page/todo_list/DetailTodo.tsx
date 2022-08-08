@@ -20,15 +20,19 @@ const DetailTodo = ({
   return(
     <ColBox
       gap={.5}
+      // bgColor="white"
+      padding=".5rem"
     >
       <Text
         shadow
+        bgColor="white"
       >
         {todo.title}
       </Text>
       <Text
         height={10}
         shadow
+        bgColor="white"
       >
       {todo.content}
       </Text>
@@ -37,12 +41,14 @@ const DetailTodo = ({
         center
       >
         <MainBtn
+          width={8}
           onClick={(e) => onClickOpenEditTodoPopup(e, todo)}
         >
           수정
         </MainBtn>
         <MainBtn
           primary
+            width={8}
           onClick={(e) => onClickDeleteTodo(e, todo)}
         >
           삭제

@@ -10,7 +10,7 @@ interface IMainBtn {
 
 const modeSet = css<IMainBtn>`
   ${({ theme, primary }) => {
-    const backColor = primary ? theme.colors.primary_blue : theme.colors.light_gray;
+    const backColor = primary ? theme.colors.dark_gray : theme.colors.light_gray;
     const fontColor = primary && theme.colors.white;
 
     return css`

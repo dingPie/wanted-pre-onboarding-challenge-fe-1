@@ -102,8 +102,9 @@ export const InputTextAreaEle = styled.textarea<IInputTextAreaEle>`  //["attrs"]
 
   ${fontSizeSet};
 
-  border: none;
-  outline: none;
+  border: 2px lightgray solid;
+  border-radius: .25rem;
+  /* outline: none; */
   resize: none;
 
   ${({shadow}) => {

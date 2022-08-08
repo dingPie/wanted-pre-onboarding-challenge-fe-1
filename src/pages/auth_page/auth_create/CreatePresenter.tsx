@@ -83,7 +83,7 @@ const CreatePresenter = forwardRef<HTMLButtonElement, ICreatePresenter>(( {
           <CustomBtn
             bold
             color={ (isCollectEmailForm && isCollectPwForm ) ? "white" : "gray" }
-            bgColor="#679BFF"
+            bgColor="#505050"
             width={12.5}
             ref={ref}
             onPolish={ isCollectEmailForm && isCollectPwForm }

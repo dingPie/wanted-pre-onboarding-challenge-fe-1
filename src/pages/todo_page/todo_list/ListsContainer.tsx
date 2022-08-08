@@ -74,6 +74,7 @@ const ListsContainer = ({
   return(
     <RowBox
       gap={.5}
+      padding=".5rem"
     >
       <ListBox>
         {todos.map(todo => {
@@ -103,6 +104,7 @@ export default ListsContainer;
 const ListBox = styled.div`
   width:100%;
   overflow-y: scroll;
+  padding: .25rem;
 
   &::-webkit-scrollbar {
     width: 0;

@@ -36,7 +36,7 @@ const Header = ( {
 
   return (
     <RowBox
-      padding="0"
+      padding=".5rem"
       align="center"
       between
     >

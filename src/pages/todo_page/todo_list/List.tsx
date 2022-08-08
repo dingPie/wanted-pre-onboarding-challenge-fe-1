@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { MainBtn } from "../../../components/Buttons";
 import { RowBox } from "../../../components/FlexBox";
 import Text from "../../../components/Text";
 import { ITodo } from "../../../utils/dataType";
@@ -21,22 +22,27 @@ const List = ({
 
   return(
     <TodoBox
+      align="center"
+      bgColor="white"
       shadow
       onClick={ () => onClickTodo(todo)}
     >
-      <Text>
+      <Text
+      >
         {todo.title}
       </Text>
-      <Text
+      <MainBtn
+      width={3}
         onClick={ e => onClickOpenEditTodoPopup(e, todo)}
       >
         수정
-      </Text>
-      <Text
+      </MainBtn>
+      <MainBtn
+      width={3}
         onClick={e => onClickDeleteTodo(e, todo)}
       >
         삭제
-      </Text>
+      </MainBtn>
     </TodoBox>
   )
 }
@@ -49,8 +55,8 @@ export const TodoBox = styled(RowBox)`
   gap: .5rem;
 
   width: 100%;
-  height: 2.5rem;
-  padding: 0;
+  /* height: 2.5rem; */
+  padding: .5rem;
   margin-bottom: .5rem;
 
   border-radius: .25rem ;

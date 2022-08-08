@@ -30,6 +30,7 @@ const InputContainer = ( {
     setInputContent(e.target.value)
   }
 
+  
   // 추가 버튼 클릭
   const onClickAddTodo = async () => {
     if (!inputTitle.length || !inputContent.length ) {

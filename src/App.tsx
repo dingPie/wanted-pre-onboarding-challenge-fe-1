@@ -54,7 +54,7 @@ function App({
 export default App;
 
 const Box = styled.div`
-  max-width: 1200px;
+  max-width: 1024px;
   padding: 1rem;
   margin: 0 auto;
 `

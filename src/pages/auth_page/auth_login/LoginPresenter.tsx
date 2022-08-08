@@ -61,6 +61,7 @@ const LoginPresenter = forwardRef<HTMLButtonElement, ILoginPresenter>(( {
       <RowBox>
         <MainBtn
           onClick={() => onClickPopupCreateUser()}
+          width={12.5}
         >
           회원가입
         </MainBtn>
@@ -69,9 +70,9 @@ const LoginPresenter = forwardRef<HTMLButtonElement, ILoginPresenter>(( {
         <CustomBtn
           bold
           color="white"
-          bgColor="#679BFF"
+          bgColor="#505050"
+          width={12.5}
           ref={ref}
-          // disabled
           onPolish={ isCollectEmailForm && isCollectPwForm }
           onClick={() => onClickLoginBtn()}
         >
