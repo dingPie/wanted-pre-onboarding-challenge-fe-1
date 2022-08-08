@@ -3,16 +3,20 @@ import axios from "axios";
 import CreatePresenter from "./CreatePresenter";
 import { checkEmailForm, checkPwForm } from "../utils/auth_service";
 import { useNavigate } from "react-router-dom";
+import AuthService from "../../../utils/service/authService";
+import TodoService from "../../../utils/service/todoService";
 
 interface ICreateContainer {
+  authService: AuthService;
+  todoService: TodoService;
   setIsOpenCreatePopup: (v: boolean) => void;
-  setIdToken: (v: string | null) => void;
 }
 
 
 const CreateContainer = ( {
+  authService,
+  todoService,
   setIsOpenCreatePopup,
-  setIdToken
 }: ICreateContainer ) => {
 
   const navigate = useNavigate();
@@ -67,22 +71,11 @@ const CreateContainer = ( {
   
   // login Check
   const onClickCrtUserBtn = async () => {
-    console.log("회원가입 로직")
-    const url = "http://localhost:8080/users/create"
-    const params = { email: inputEmail, password: inputPw }
-    
-    
-    try {
-      const res = await axios.post(url, params )
-      alert(res.data.message)
-      setIsOpenCreatePopup(false)
-      localStorage.setItem("idToken", res.data.token);
-      setIdToken(res.data.token)
-      navigate('/', {replace: true});
-    } catch (e) {
-      alert("이미 가입된 아이디가 있습니다.")
-      console.log(e, "로그인실패")
-    }
+    const loginToken = await authService.signUp(inputEmail, inputPw);
+    if (!loginToken) return
+    todoService.setIdToken(loginToken);
+    setIsOpenCreatePopup(false)
+    navigate('/', {replace: true});
   }
 
 

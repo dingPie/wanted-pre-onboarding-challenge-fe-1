@@ -1,20 +1,20 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { RowBox } from "../../../components/FlexBox";
 import { ITodo } from "../../../utils/dataType";
+import TodoService from "../../../utils/service/todoService";
 import DetailTodo from "./DetailTodo";
 import List from "./List";
 
 interface IListsContainer {
-  idToken: string;
+  todoService: TodoService;
   todos: ITodo[];
   setTodos: (todos:  ITodo[]) => void;
   setEditTodo: (todo: ITodo) => void;
 }
 
 const ListsContainer = ({
-  idToken,
+  todoService,
   todos,
   setTodos,
   setEditTodo
@@ -22,31 +22,21 @@ const ListsContainer = ({
 
   const [seletedTodo, setSeletedTodo] = useState<ITodo | null>(null);
 
-
-  const onLoadTodos = async () => {
-    const url = "http://localhost:8080/todos"
-    const config = {
-      headers: {
-        Authorization: idToken
-      }
-    }
-    try {
-      const res = await axios.get(url, config);
-      console.log("가져온 투두 목록", res.data)
-      setTodos(res.data.data)
-    } catch (e) {
-      console.log(e, "에러")
-    }
-  }
-
+   // Todo 불러오기
+  const onLoadTodos = useCallback(async () => {
+    const getTodos = await todoService.getTodos();
+    if (!getTodos) return
+    setTodos(getTodos)
+  },[setTodos, todoService])
 
   useEffect(() => {
     onLoadTodos()
     const seletedTodo = localStorage.getItem("seletedTodo")
     if (seletedTodo)  setSeletedTodo(JSON.parse(seletedTodo))
-  }, [])
+  }, [onLoadTodos])
 
   
+  // Todo 목록 클릭
   const onClickTodo = (todo: ITodo) => {
     if (todo === seletedTodo) {
       setSeletedTodo(null)
@@ -57,33 +47,23 @@ const ListsContainer = ({
     }
   }
   
-
+  // Todo 삭제버튼 클릭
   const onClickDeleteTodo = async (e: React.MouseEvent<HTMLDivElement|HTMLButtonElement> , todo: ITodo) => {
     e.stopPropagation();
     const confirm = window.confirm("정말 이 Todo를 삭제할까요?")
     if (!confirm) return
 
+    if(seletedTodo) setSeletedTodo(null);
+    const deleteTodo = await todoService.deleteTodo(todo);
+    if(!deleteTodo) return
+    
     const targetId = todo.id;
-
-    const url = `http://localhost:8080/todos/${todo.id}`
-    const config = {
-      headers: {
-        Authorization: idToken
-      },
-    }
-    try {
-      const res = await axios.delete(url, config);
-      console.log("투두 삭제: ", res.data)
-    } catch (e) {
-      console.log(e, "에러")
-    }
-
     const deletedTodo = todos.filter(todo => todo.id !== targetId );
     setTodos(deletedTodo);
-    if(seletedTodo) setSeletedTodo(null);
   }
 
 
+  // 수정창 띄우기
   const onClickOpenEditTodoPopup = (e: React.MouseEvent<HTMLDivElement|HTMLButtonElement>, todo: ITodo) => {
     e.stopPropagation();
     setEditTodo(todo);

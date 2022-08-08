@@ -5,6 +5,12 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import theme from './styles/theme';
+import TodoService from './utils/service/todoService';
+import AuthService from './utils/service/authService';
+
+
+const todoService = new TodoService();
+const authService = new AuthService();
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -13,7 +19,10 @@ root.render(
   // <React.StrictMode>
     <BrowserRouter>
       <ThemeProvider theme ={theme} >
-        <App />
+        <App 
+          todoService={todoService}
+          authService={authService}
+        />
       </ThemeProvider>
     </BrowserRouter>
   // </React.StrictMode>

@@ -1,6 +1,5 @@
 import React from "react";
-import styled from "styled-components";
-import { CustomBtn, MainBtn } from "../../../components/Buttons";
+import { MainBtn } from "../../../components/Buttons";
 import { ColBox, RowBox } from "../../../components/FlexBox";
 import Text from "../../../components/Text";
 import { ITodo } from "../../../utils/dataType";

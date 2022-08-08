@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { CustomBtn, MainBtn } from "../../../components/Buttons";
-import { ColBox, RowBox } from "../../../components/FlexBox";
+import {  MainBtn } from "../../../components/Buttons";
+import {  RowBox } from "../../../components/FlexBox";
 import { InputText } from "../../../components/InputText";
 import InputTextArea from "../../../components/InputTextArea";
 import Text from "../../../components/Text";
 import { center } from "../../../styles/stylesCss";
-import { ITodo } from "../../../utils/dataType";
 
 interface IEditPresenter {
   inputTitle: string;

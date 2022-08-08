@@ -3,16 +3,20 @@ import axios from "axios";
 import { checkEmailForm, checkPwForm } from "../utils/auth_service";
 import { useNavigate } from "react-router-dom";
 import LoginPresenter from "./LoginPresenter";
+import AuthService from "../../../utils/service/authService";
+import TodoService from "../../../utils/service/todoService";
 
 interface ILoginContainer {
+  authService: AuthService;
+  todoService: TodoService;
   setIsOpenCreatePopup: (v: boolean) => void;
-  setIdToken: (v: string | null) => void;
 }
 
 
 const LoginContainer = ( {
+  authService,
+  todoService,
   setIsOpenCreatePopup,
-  setIdToken
 }: ILoginContainer ) => {
 
   const navigate = useNavigate();
@@ -58,6 +62,7 @@ const LoginContainer = ( {
     checkEmailForm(inputEmail) ? setIsCollectEmailForm(true) : setIsCollectEmailForm(false)
   }, [inputEmail])
 
+
   // Watch Password From
   useEffect(() => {
     if (!inputPw.length) return
@@ -67,24 +72,16 @@ const LoginContainer = ( {
   
   // login Check
   const onClickLoginBtn = async () => {
-    const url = "http://localhost:8080/users/login"
-    const params = { email: inputEmail, password: inputPw }
-    try {
-      const res = await axios.post(url, params );
-      localStorage.setItem("idToken", res.data.token);
-      setIdToken(res.data.token);
-      navigate('/', {replace: true});
-    } catch (e) {
-      alert("아이디 / 비밀번호가 잘못되었습니다.")
-    }
-    
+    const loginToken = await authService.login(inputEmail, inputPw); 
+    if (!loginToken) return
+    todoService.setIdToken(loginToken)
+    navigate('/', {replace: true});
   }
 
+  // 가입 팝업 호출
   const onClickPopupCreateUser = () => setIsOpenCreatePopup(true)
 
-
   
-
   return(
     <LoginPresenter 
       inputEmail={inputEmail}
