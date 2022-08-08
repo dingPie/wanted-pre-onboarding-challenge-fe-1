@@ -1,46 +1,91 @@
-# Getting Started with Create React App
+# 원티드 프리온보딩 챌린지 프론트엔드 코스 사전과제
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+원티드 프리온보딩 챌린지 사전 과제 ReadMe 입니다.
 
-## Available Scripts
+<br>
 
-In the project directory, you can run:
+## 사용한 패키지
+---
+- React.js
+- TypeScript
+- styled-components
+- axios
 
-### `npm start`
+<br>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 폴더 구조
+---
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+이미지 삽입 예정
 
-### `npm test`
+|name|desc|
+|------|---|
+|components| 공용 컴포넌트 모음입니다.
+|pages| 각 router가 나눠지는 페이지 별로 폴더를 나눕니다.<br> page안에선 컴포넌트별로 추가로 나눕니다.
+|styles| styled-component를 이용한 기본 및 공용 스타일을 정의합니다
+|utils | axios를 이용한 api 통신 서비스 및 공용 타입을 정의합니다. 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<br>
 
-### `npm run build`
+## 시작하기
+---
+### yarn start 
+<br>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+해당 명령어 입력시 http://localhost:3000 으로 실행됩니다. <br>
+server와 따로 실행해줘야 합니다.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<br>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 구현 사항
+---
+각 항목별로 숫자를 매겨 구현 사항을 정리하였습니다.
 
-### `npm run eject`
+<br>
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## 1. Auth Page
+- /auth 경로에 로그인 / 회원가입 기능을 개발합니다. <br>
+1. 로그인은 page에 직접, 회원가입은 팝업을 이용하여 구현하였습니다.
+2. DB에 저장되는 정보가 많지 않아, 아이디 / 닉네임 등 추가 정보는 기입하지 않았습니다.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<br>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- 이메일과 비밀번호의 유효성을 확인합니다. <br>
+1. 이메일은 정규식을 이용하여 검사, 비밀번호는 문자열 길이로 검사합니다.
+2. 두 조건이 모두 만족할 때, 로그인/가입 버튼을을 활성화합니다.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+<br>
 
-## Learn More
+- 로그인 API를 호출하고, 올바른 응답을 받았을 때 루트 경로로 이동시켜주세요. <br>
+1. 로그인 / 회원가입 성공 시, react-router-dom의 navigate를 이용하여 todo 페이지로 이동시킵니다. <br>
+이 때, repace: true 를 옵션으로 사용하여 로그인 뒤로가기를 방지합니다.
+2. 로그인 시, tokenId 라는 key로 로컬스토리지에 tokenId가 저장됩니다.
+3. 재접속시 App 컴포넌트에서 로컬스토리지의 tokenId 여부를 검사하여, 토큰이 유효하지 않을 경우 auth 페이지로 리다이렉트를 시켜줍니다.
+4. 로그아웃 기능을 구현하였습니다. 현재 저장 된 tokenId를 삭제하며, auth 페이지로 이동합니다.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+<br>
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 2. Todo Page
+---
+- Todo List API를 호출하여 Todo List CRUD 기능을 구현해주세요 <br>
+1. 목록은 기본적으로 노출되며, 목록의 Todo 클릭시 상세 화면이 오른쪽에 활성화됩니다. <br> 현재 활성화 된 항목을 다시 누를 시, 상세 화면이 닫힙니다.
+1. todo 페이지 접속 시, DB의 Todos를 받아와 화면에 표시해줍니다.
+2. 제목과 내용을 입력 후 Add 버튼 클릭 시, DB와 state에 새 Todo가 추가됩니다.
+3. 수정버튼 클릭 시, Todo 수정이 가능한 팝업이 활성화 됩니다. <br> 
+여기서 확인을 통해 수정이 가능합니다.
+4. 삭제버튼을 통해 Todo 삭제가 가능합니다.
+
+<br>
+
+- 한 화면 내에서 Todo List와 개별 Todo의 상세를 확인할 수 있도록 해주세요. <br>
+1. 클릭하여 상세보기가 활성화 된 Todo는 seletedTodo의 key로 로컬스토리지에 저장됩니다. <br>매 클릭시 마다 새로운 Todo가 저장되며, 이미 활성화 된 Todo를 재 클릭시 해당 항목이 로컬스토리지에서 삭제됩니다. <br>
+todo 페이지 접속 시, 로컬스토리지에 저장된 seletedTodo 항목의 유/무를 검사하여 상태를 변경해줍니다.
+2. 정확한 요청사항을 파악하지 못하여 구현하지 못하였습니다.
+
+<br>
+
+- 한 페이지 내에서 새로고침 없이 데이터가 정합성을 갖추도록 구현해주세요<br>
+1. todo의 CRUD 기능 사용시, todo 페이지의 todos state를 새로 업데이트 해 줍니다. <br>
+CRUD 기능 시 마다 getTodos 를 이용해도 되지만, 불필요한 통신이라 생각하여 현재 로직으로 구현하였습니다.
+
+<br>
