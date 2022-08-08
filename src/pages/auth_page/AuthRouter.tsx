@@ -1,17 +1,19 @@
 import React, { useState } from "react";
+import AuthService from "../../utils/service/authService";
+import TodoService from "../../utils/service/todoService";
 
 import CreateContainer from "./auth_create/CreateContainer";
 import LoginContainer from "./auth_login/LoginContainer";
 
 interface IAuthRouter {
-  idToken: string | null;
-  setIdToken: (v: string | null) => void;
+  authService: AuthService;
+  todoService: TodoService;
 }
 
 
 const AuthRouter = ( {
-  idToken,
-  setIdToken
+  authService,
+  todoService
 }: IAuthRouter ) => {
 
   const [isOpenCreatePopup, setIsOpenCreatePopup] = useState(false)
@@ -19,15 +21,17 @@ const AuthRouter = ( {
 
   return(
   <>
-    <LoginContainer 
+    <LoginContainer
+      authService={authService}
+      todoService={todoService}
       setIsOpenCreatePopup={setIsOpenCreatePopup}
-      setIdToken={setIdToken}
     />
 
     { isOpenCreatePopup &&
-      <CreateContainer 
+      <CreateContainer
+        authService={authService}
+        todoService={todoService}
         setIsOpenCreatePopup={setIsOpenCreatePopup}
-        setIdToken={setIdToken}
       />
     }
   </>)

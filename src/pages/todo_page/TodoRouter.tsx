@@ -1,43 +1,43 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ITodo } from "../../utils/dataType";
+import TodoService from "../../utils/service/todoService";
 import EditContainer from "./todo_edit/EditContainer";
 import InputContainer from "./todo_input/InputContainer";
 import ListsContainer from "./todo_list/ListsContainer";
 
-interface ITodoRouter {
-  idToken: string | null;
-  setIdToken: (v: string | null) => void;
+interface ITodoRouter{
+  todoService: TodoService
 }
 
 
 const TodoRouter = ( {
-  idToken,
-  setIdToken
+  todoService,
 }: ITodoRouter ) => {
 
   const [todos, setTodos] = useState<ITodo[]>([]);
   const [editTodo, setEditTodo] = useState<ITodo | null>(null);
 
 
-  
-
 
   return(
   <>
     <InputContainer 
-      idToken={idToken as string}
+      // idToken={idToken as string}
+      todoService={todoService}
       todos={todos}
       setTodos={setTodos}
     />
     <ListsContainer
-      idToken={idToken as string}
+      // idToken={idToken as string}
+      todoService={todoService}
       todos={todos}
       setTodos={setTodos}
       setEditTodo={setEditTodo}
     />
     {editTodo &&
       <EditContainer
-        idToken={idToken as string}
+        // idToken={idToken as string}
+        todoService={todoService}
         todos={todos}
         setTodos={setTodos}
         editTodo={editTodo}
