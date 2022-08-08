@@ -5,7 +5,7 @@
 <br>
 
 ## 사용한 패키지
----
+
 - React.js
 - TypeScript
 - styled-components
@@ -14,9 +14,8 @@
 <br>
 
 ## 폴더 구조
----
 
-이미지 삽입 예정
+![image](https://user-images.githubusercontent.com/82368684/183444209-11b390ef-7a6e-4811-9826-1abbe761a518.png)
 
 |name|desc|
 |------|---|
@@ -28,7 +27,7 @@
 <br>
 
 ## 시작하기
----
+
 ### yarn start 
 <br>
 
@@ -38,7 +37,7 @@ server와 따로 실행해줘야 합니다.
 <br>
 
 ## 구현 사항
----
+
 각 항목별로 숫자를 매겨 구현 사항을 정리하였습니다.
 
 <br>
@@ -66,7 +65,7 @@ server와 따로 실행해줘야 합니다.
 <br>
 
 ## 2. Todo Page
----
+
 - Todo List API를 호출하여 Todo List CRUD 기능을 구현해주세요 <br>
 1. 목록은 기본적으로 노출되며, 목록의 Todo 클릭시 상세 화면이 오른쪽에 활성화됩니다. <br> 현재 활성화 된 항목을 다시 누를 시, 상세 화면이 닫힙니다.
 1. todo 페이지 접속 시, DB의 Todos를 받아와 화면에 표시해줍니다.
