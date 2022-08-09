@@ -37,14 +37,14 @@ function App({
         <Route path="/" element={
           <TodoRouter
             todoService={todoService}
-          />} 
+          />}
         />
 
         <Route path="/auth" element={
           <AuthRouter
             authService={authService}
             todoService={todoService}
-          />} 
+          />}
         />
       </Routes>
     </Box>
