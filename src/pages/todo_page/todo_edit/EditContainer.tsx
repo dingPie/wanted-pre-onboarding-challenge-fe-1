@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ITodo } from "../../../utils/dataType";
+import { ITodo } from "../../../utils/types/dataType";
 import EditPresenter from "./EditPresenter";
 import TodoService from "../../../utils/service/todoService";
 
@@ -24,7 +24,7 @@ const EditContainer = ({
 
   useEffect(() => {
     setInputTitle(editTodo.title)
-    setInputContent(editTodo.title)
+    setInputContent(editTodo.content)
   
     return () => {
       setInputTitle("")

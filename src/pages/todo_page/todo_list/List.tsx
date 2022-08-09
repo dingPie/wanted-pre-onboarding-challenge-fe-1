@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { MainBtn } from "../../../components/Buttons";
 import { RowBox } from "../../../components/FlexBox";
 import Text from "../../../components/Text";
-import { ITodo } from "../../../utils/dataType";
+import { ITodo } from "../../../utils/types/dataType";
 
 interface IList {
   todo: ITodo

@@ -2,11 +2,18 @@ import axios from "axios";
 
 
 class AuthService {
+
+  private baseUrl: string;
+  
+  constructor() {
+    this.baseUrl = "http://localhost:8080/users"
+  }
+  
   async login ( inputEmail: string, inputPw: string ): Promise<string | null>  {
-    const url = "http://localhost:8080/users/login"
     const params = { email: inputEmail, password: inputPw }
+
     try {
-      const res = await axios.post(url, params );
+      const res = await axios.post(this.baseUrl + "/login", params );
       localStorage.setItem("idToken", res.data.token);
       return res.data.token
     } catch (e) {
@@ -16,10 +23,10 @@ class AuthService {
   }
 
   async signUp ( inputEmail: string, inputPw: string ): Promise<string | null>  {
-    const url = "http://localhost:8080/users/create"
     const params = { email: inputEmail, password: inputPw }
+    
     try {
-      const res = await axios.post(url, params )
+      const res = await axios.post(this.baseUrl + "/create", params )
       localStorage.setItem("idToken", res.data.token);
       alert(res.data.message)
       return res.data.token
