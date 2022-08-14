@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ITodo } from "../../utils/dataType";
+import { ITodo } from "../../utils/types/dataType";
 import TodoService from "../../utils/service/todoService";
 import EditContainer from "./todo_edit/EditContainer";
 import InputContainer from "./todo_input/InputContainer";

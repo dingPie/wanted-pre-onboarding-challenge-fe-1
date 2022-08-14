@@ -1,14 +1,23 @@
-import axios from "axios";
-import { ITodo } from "../dataType";
+import axios, { AxiosRequestConfig } from "axios";
+import { ITodo } from "../types/dataType";
 
 class TodoService {
 
   private idToken: string | null;
-
+  private baseUrl: string;
+  private config: AxiosRequestConfig;
+  
   constructor() {
     this.idToken = null;
+    this.baseUrl = "http://localhost:8080/todos/"
+    this.config = {
+      headers: {
+        Authorization: this.idToken as unknown as string
+      }
+    }
   }
-
+  
+  // idToken getter setter 
   setIdToken (_idToken: string | null) {
     this.idToken = _idToken;
   }
@@ -20,14 +29,8 @@ class TodoService {
 
   // todos 가져오기
   async getTodos (): Promise<ITodo[] | null> {
-    const url = "http://localhost:8080/todos"
-    const config = {
-      headers: {
-        Authorization: this.idToken as string
-      }
-    }
     try {
-      const res = await axios.get(url, config);
+      const res = await axios.get(this.baseUrl, this.config );
       return res.data.data as ITodo[]
     } catch (e) {
       console.log(e, "에러")
@@ -38,17 +41,11 @@ class TodoService {
 
   // todo 추가
   async createTodo (inputTitle: string, inputContent: string): Promise<ITodo | null>  {
-    const url = "http://localhost:8080/todos"
     const params = { title: inputTitle, content: inputContent }
-    const config = {
-      headers: {
-        Authorization: this.idToken as string
-      }
-    }
+
     try {
-      const res = await axios.post(url, params, config);
+      const res = await axios.post(this.baseUrl, params, this.config );
       return res.data.data as ITodo
-      // setTodos([...todos, res.data.data])
     } catch (e) {
       console.log(e)
       alert("알 수 없는 오류로 실패하였습니다.")
@@ -59,15 +56,9 @@ class TodoService {
 
   // todo 수정
   async updateTodo (inputTitle: string, inputContent: string, editTodo: ITodo): Promise<ITodo | null>  {
-    const url = `http://localhost:8080/todos/${editTodo.id}`
     const params = { title: inputTitle, content: inputContent }
-    const config = {
-      headers: {
-        Authorization: this.idToken as string
-      }
-    }
     try {
-      const res = await axios.put(url, params, config);
+      const res = await axios.put(this.baseUrl + editTodo.id, params, this.config );
       return res.data.data as ITodo
     } catch (e) {
       console.log(e)
@@ -79,15 +70,8 @@ class TodoService {
 
   // todo 삭제
   async deleteTodo (todo: ITodo) {
-    const targetId = todo.id;
-    const url = `http://localhost:8080/todos/${targetId}`
-    const config = {
-      headers: {
-        Authorization: this.idToken as string
-      },
-    }
     try {
-      const res = await axios.delete(url, config);
+      const res = await axios.delete(this.baseUrl + todo.id, this.config );
       return res.data
     } catch (e) {
       console.log(e, "에러")

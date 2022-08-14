@@ -73,6 +73,7 @@ const CreateContainer = ( {
   const onClickCrtUserBtn = async () => {
     const loginToken = await authService.signUp(inputEmail, inputPw);
     if (!loginToken) return
+    
     todoService.setIdToken(loginToken);
     setIsOpenCreatePopup(false)
     navigate('/', {replace: true});

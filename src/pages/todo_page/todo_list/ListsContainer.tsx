@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { RowBox } from "../../../components/FlexBox";
-import { ITodo } from "../../../utils/dataType";
+import { ITodo } from "../../../utils/types/dataType";
 import TodoService from "../../../utils/service/todoService";
 import DetailTodo from "./DetailTodo";
 import List from "./List";

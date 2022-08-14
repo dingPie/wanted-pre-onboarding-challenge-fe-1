@@ -1,5 +1,5 @@
 import React, {  useState } from "react";
-import { ITodo } from "../../../utils/dataType";
+import { ITodo } from "../../../utils/types/dataType";
 import TodoService from "../../../utils/service/todoService";
 import InputPresenter from "./InputPresenter";
 

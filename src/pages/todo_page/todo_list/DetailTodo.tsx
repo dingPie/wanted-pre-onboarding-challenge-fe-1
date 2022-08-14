@@ -2,7 +2,7 @@ import React from "react";
 import { MainBtn } from "../../../components/Buttons";
 import { ColBox, RowBox } from "../../../components/FlexBox";
 import Text from "../../../components/Text";
-import { ITodo } from "../../../utils/dataType";
+import { ITodo } from "../../../utils/types/dataType";
 
 interface IDetailTodo {
   todo: ITodo
