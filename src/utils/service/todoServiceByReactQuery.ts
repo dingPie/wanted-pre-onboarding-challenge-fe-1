@@ -40,7 +40,7 @@ class TodoServiceByReactQuery {
 
 
   // todo 추가
-  async createTodo <T>(inputTitle: string, inputContent: string): Promise<AxiosResponse<T>| null>  {
+  async createTodo <T>(inputTitle: string, inputContent: string): Promise<AxiosResponse<T>| null>   {
     const params = { title: inputTitle, content: inputContent }
 
     try {
@@ -54,7 +54,7 @@ class TodoServiceByReactQuery {
 
 
   // todo 수정
-  async updateTodo <T>(inputTitle: string, inputContent: string, editTodo: ITodo): Promise<AxiosResponse<T>| null>  {
+  async updateTodo <T>(inputTitle: string, inputContent: string, editTodo: ITodo): Promise<AxiosResponse<T>| null>   {
     const params = { title: inputTitle, content: inputContent }
     try {
       return await axios.put(this.baseUrl + editTodo.id, params, this.config );

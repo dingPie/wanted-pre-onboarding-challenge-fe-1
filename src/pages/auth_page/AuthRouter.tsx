@@ -1,19 +1,23 @@
 import React, { useState } from "react";
+import { QueryClient } from "react-query";
 import AuthService from "../../utils/service/authService";
 import TodoService from "../../utils/service/todoService";
+import TodoServiceByReactQuery from "../../utils/service/todoServiceByReactQuery";
 
 import CreateContainer from "./auth_create/CreateContainer";
 import LoginContainer from "./auth_login/LoginContainer";
 
-interface IAuthRouter {
+export interface IAuthRouter {
   authService: AuthService;
-  todoService: TodoService;
+  todoService: TodoServiceByReactQuery;
+  queryClient: QueryClient;
 }
 
 
 const AuthRouter = ( {
   authService,
-  todoService
+  todoService,
+  queryClient
 }: IAuthRouter ) => {
 
   const [isOpenCreatePopup, setIsOpenCreatePopup] = useState(false)
@@ -24,6 +28,7 @@ const AuthRouter = ( {
     <LoginContainer
       authService={authService}
       todoService={todoService}
+      queryClient={queryClient}
       setIsOpenCreatePopup={setIsOpenCreatePopup}
     />
 
@@ -31,6 +36,7 @@ const AuthRouter = ( {
       <CreateContainer
         authService={authService}
         todoService={todoService}
+        queryClient={queryClient}
         setIsOpenCreatePopup={setIsOpenCreatePopup}
       />
     }

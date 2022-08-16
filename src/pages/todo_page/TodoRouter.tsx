@@ -5,15 +5,18 @@ import EditContainer from "./todo_edit/EditContainer";
 import InputContainer from "./todo_input/InputContainer";
 import ListsContainer from "./todo_list/ListsContainer";
 import TodoServiceByReactQuery from "../../utils/service/todoServiceByReactQuery";
+import { QueryClient } from "react-query";
 
 interface ITodoRouter{
   // todoService: TodoService
-  todoService: TodoServiceByReactQuery
+  todoService: TodoServiceByReactQuery;
+  queryClient: QueryClient;
 }
 
 
 const TodoRouter = ( {
   todoService,
+  queryClient
 }: ITodoRouter ) => {
 
   const [todos, setTodos] = useState<ITodo[]>([]);
@@ -24,13 +27,13 @@ const TodoRouter = ( {
   return(
   <>
     <InputContainer 
-      // idToken={idToken as string}
+      queryClient={queryClient}
       todoService={todoService}
       todos={todos}
       setTodos={setTodos}
     />
     <ListsContainer
-      // idToken={idToken as string}
+      queryClient={queryClient}
       todoService={todoService}
       todos={todos}
       setTodos={setTodos}
@@ -38,7 +41,7 @@ const TodoRouter = ( {
     />
     {editTodo &&
       <EditContainer
-        // idToken={idToken as string}
+        queryClient={queryClient}
         todoService={todoService}
         todos={todos}
         setTodos={setTodos}

@@ -30,13 +30,12 @@ root.render(
   // <React.StrictMode>
     <BrowserRouter>
       <ThemeProvider theme={theme} >
-      <QueryClientProvider client={queryClient}>
-      {/* devtools */}
-      <ReactQueryDevtools initialIsOpen={true} />
-        <App 
-          todoService={todoService}
-          authService={authService}
-        />
+        <QueryClientProvider client={queryClient}>
+          <App
+            queryClient={queryClient}
+            todoService={todoService}
+            authService={authService}
+          />
         </QueryClientProvider>
       </ThemeProvider>
     </BrowserRouter>

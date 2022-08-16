@@ -3,10 +3,12 @@ import { ITodo } from "../../../utils/types/dataType";
 import TodoService from "../../../utils/service/todoService";
 import InputPresenter from "./InputPresenter";
 import TodoServiceByReactQuery from "../../../utils/service/todoServiceByReactQuery";
+import { QueryClient, useMutation } from "react-query";
 
 interface IInputContainer {
     // todoService: TodoService
-    todoService: TodoServiceByReactQuery;
+  todoService: TodoServiceByReactQuery;
+  queryClient: QueryClient;
   todos: ITodo[];
   setTodos: (todos:  ITodo[]) => void;
 }
@@ -14,6 +16,7 @@ interface IInputContainer {
 
 const InputContainer = ( {
   todoService,
+  queryClient,
   todos,
   setTodos
 }: IInputContainer ) => {
@@ -46,6 +49,16 @@ const InputContainer = ( {
     setInputContent("")
   }
 
+    // React Query 적용 ////////////////
+   // Mutations
+   const GET_TODOS = "getTodos";
+   const mutation = useMutation(onClickAddTodo, {
+    onSuccess: async () => {
+      queryClient.invalidateQueries(GET_TODOS);
+    }
+   })
+  ////////////////////////////////
+
   
 
   return(
@@ -54,7 +67,7 @@ const InputContainer = ( {
       inputContent={inputContent}
       onChangeInputTitle={onChangeInputTitle}
       onChangeInputContent={onChangeInputContent}
-      onClickAddTodo={onClickAddTodo}
+      onClickAddTodo={mutation.mutate}
     />
  )
 }

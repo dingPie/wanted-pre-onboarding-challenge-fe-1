@@ -2,16 +2,15 @@ import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { RowBox } from "../../../components/FlexBox";
 import { ITodo } from "../../../utils/types/dataType";
-import TodoService from "../../../utils/service/todoService";
 import DetailTodo from "./DetailTodo";
 import List from "./List";
-import { useQuery, useQueryClient } from "react-query";
-import axios from "axios";
+import { QueryClient, useQuery } from "react-query";
 import TodoServiceByReactQuery from "../../../utils/service/todoServiceByReactQuery";
 
 interface IListsContainer {
     // todoService: TodoService
-    todoService: TodoServiceByReactQuery;
+  todoService: TodoServiceByReactQuery;
+  queryClient: QueryClient;
   todos: ITodo[];
   setTodos: (todos:  ITodo[]) => void;
   setEditTodo: (todo: ITodo) => void;
@@ -19,6 +18,7 @@ interface IListsContainer {
 
 const ListsContainer = ({
   todoService,
+  queryClient,
   todos,
   setTodos,
   setEditTodo
@@ -33,11 +33,12 @@ const ListsContainer = ({
   //   setTodos(getTodos)
   // },[setTodos, todoService])
 
-  // useEffect(() => {
-  //   onLoadTodos()
-  //   const seletedTodo = localStorage.getItem("seletedTodo")
-  //   if (seletedTodo)  setSeletedTodo(JSON.parse(seletedTodo))
-  // }, [onLoadTodos])
+
+  // 이전 클릭했던 Todo Local storage에 저장
+  useEffect(() => {
+    const seletedTodo = localStorage.getItem("seletedTodo")
+    if (seletedTodo)  setSeletedTodo(JSON.parse(seletedTodo))
+  }, [])
 
   
   // Todo 목록 클릭
@@ -51,6 +52,7 @@ const ListsContainer = ({
     }
   }
   
+
   // Todo 삭제버튼 클릭
   const onClickDeleteTodo = async (e: React.MouseEvent<HTMLDivElement|HTMLButtonElement> , todo: ITodo) => {
     e.stopPropagation();
@@ -74,20 +76,10 @@ const ListsContainer = ({
     setSeletedTodo(null);
   }
 
-  const getUserWithAxios = async () => {
-    const config = {
-      headers: {
-        Authorization: "eyJhbGciOiJIUzI1NiJ9.dGVzdEBlbWFpbC5jb20.lyqnWJman9sexCDOIhvz_GRIaJcwRHH2Y9jWJ5ZIWmA"
-      }
-    }
-    const { data } = await axios.get('http://localhost:8080/todos/', config);
-    return data;
-  };
 
-
+  const GET_TODOS = "getTodos";
   // React Query 적용 ////////////////
-
-  const { isLoading, isError, data, error } = useQuery(['todos'], () => todoService.getTodos<ITodo[]>() );
+  const { isLoading, isError, data, error } = useQuery([GET_TODOS], () => todoService.getTodos<ITodo[]>() );
   
   if (isLoading) {
     return <span>Loading...</span>
@@ -97,7 +89,12 @@ const ListsContainer = ({
     if ( error instanceof Error)
       return <span>Error: {error.message}</span>
   }
-
+  // 삭제버튼 React Query 적용: 실패...
+  // const mutation = useMutation(onClickDeleteTodo, {
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries("getTodos");
+  //   }
+  //  })
   ////////////////////////////////
 
 
@@ -107,7 +104,7 @@ const ListsContainer = ({
       padding=".5rem"
     >
       <ListBox>
-        {data && data.data.data.map(todo => {
+        {data && data.data.data.map(todo => { // React Query 적용하여 바로 데이터 넣어줌
           return (
           <List
             key={todo.id}

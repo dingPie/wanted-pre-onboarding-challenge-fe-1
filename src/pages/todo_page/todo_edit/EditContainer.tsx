@@ -3,10 +3,12 @@ import { ITodo } from "../../../utils/types/dataType";
 import EditPresenter from "./EditPresenter";
 import TodoService from "../../../utils/service/todoService";
 import TodoServiceByReactQuery from "../../../utils/service/todoServiceByReactQuery";
+import { QueryClient, useMutation } from "react-query";
 
 interface IEditContainer {
     // todoService: TodoService
-    todoService: TodoServiceByReactQuery;
+  todoService: TodoServiceByReactQuery;
+  queryClient: QueryClient;
   todos: ITodo[];
   editTodo: ITodo;
   setTodos: (todos:  ITodo[]) => void;
@@ -19,6 +21,7 @@ const EditContainer = ({
   editTodo,
   setTodos,
   setEditTodo,
+  queryClient
 }: IEditContainer) => {
 
   const [inputTitle, setInputTitle] = useState("")
@@ -58,8 +61,18 @@ const EditContainer = ({
     const editedTodos = todos.map(todo => todo.id === editTodo.id ? updatedTodo.data : todo )
     setTodos(editedTodos)
     setEditTodo(null)
+    
   }
-  
+
+  // React Query 적용 ////////////////
+   // Mutations
+   const GET_TODOS = "getTodos";
+   const mutation = useMutation(onClickEditBtn, {
+    onSuccess: async () => {
+      queryClient.invalidateQueries(GET_TODOS);
+    }
+   })
+  ////////////////////////////////
 
   // 취소 버튼 클릭
   const onClickCancelBtn= () => setEditTodo(null)
@@ -72,7 +85,7 @@ const EditContainer = ({
     inputContent={inputContent}
     onChangeInputTitle={onChangeInputTitle}
     onChangeInputContent={onChangeInputContent}
-    onClickEditBtn={onClickEditBtn}
+    onClickEditBtn={mutation.mutate}
     onClickCancelBtn={onClickCancelBtn}
    /> 
   )
