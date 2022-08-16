@@ -1,7 +1,7 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { ITodo } from "../types/dataType";
 
-class TodoService {
+class TodoServiceByReactQuery {
 
   private idToken: string | null;
   private baseUrl: string;
@@ -28,10 +28,10 @@ class TodoService {
 
 
   // todos 가져오기
-  async getTodos (): Promise<ITodo[] | null> {
+  async getTodos <T>(): Promise<AxiosResponse<{data: T}>| null>   {
     try {
-      const res = await axios.get(this.baseUrl, this.config );
-      return res.data.data as ITodo[]
+      console.log(this.baseUrl, this.config)
+      return await axios.get(this.baseUrl, this.config );
     } catch (e) {
       console.log(e, "에러")
       return null
@@ -40,12 +40,11 @@ class TodoService {
 
 
   // todo 추가
-  async createTodo (inputTitle: string, inputContent: string): Promise<ITodo | null>  {
+  async createTodo <T>(inputTitle: string, inputContent: string): Promise<AxiosResponse<T>| null>  {
     const params = { title: inputTitle, content: inputContent }
 
     try {
-      const res = await axios.post(this.baseUrl, params, this.config );
-      return res.data.data as ITodo
+      return await axios.post(this.baseUrl, params, this.config );
     } catch (e) {
       console.log(e)
       alert("알 수 없는 오류로 실패하였습니다.")
@@ -55,11 +54,10 @@ class TodoService {
 
 
   // todo 수정
-  async updateTodo (inputTitle: string, inputContent: string, editTodo: ITodo): Promise<ITodo | null>  {
+  async updateTodo <T>(inputTitle: string, inputContent: string, editTodo: ITodo): Promise<AxiosResponse<T>| null>  {
     const params = { title: inputTitle, content: inputContent }
     try {
-      const res = await axios.put(this.baseUrl + editTodo.id, params, this.config );
-      return res.data.data as ITodo
+      return await axios.put(this.baseUrl + editTodo.id, params, this.config );
     } catch (e) {
       console.log(e)
       alert("알 수 없는 오류로 실패하였습니다.")
@@ -71,12 +69,11 @@ class TodoService {
   // todo 삭제
   async deleteTodo (todo: ITodo) {
     try {
-      const res = await axios.delete(this.baseUrl + todo.id, this.config );
-      return res.data
+      return await axios.delete(this.baseUrl + todo.id, this.config );
     } catch (e) {
       console.log(e, "에러")
     }
   }
 }
 
-export default TodoService;
+export default TodoServiceByReactQuery;

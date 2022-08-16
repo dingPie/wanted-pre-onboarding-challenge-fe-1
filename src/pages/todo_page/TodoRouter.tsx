@@ -4,9 +4,11 @@ import TodoService from "../../utils/service/todoService";
 import EditContainer from "./todo_edit/EditContainer";
 import InputContainer from "./todo_input/InputContainer";
 import ListsContainer from "./todo_list/ListsContainer";
+import TodoServiceByReactQuery from "../../utils/service/todoServiceByReactQuery";
 
 interface ITodoRouter{
-  todoService: TodoService
+  // todoService: TodoService
+  todoService: TodoServiceByReactQuery
 }
 
 

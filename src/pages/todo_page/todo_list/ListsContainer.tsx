@@ -5,9 +5,13 @@ import { ITodo } from "../../../utils/types/dataType";
 import TodoService from "../../../utils/service/todoService";
 import DetailTodo from "./DetailTodo";
 import List from "./List";
+import { useQuery, useQueryClient } from "react-query";
+import axios from "axios";
+import TodoServiceByReactQuery from "../../../utils/service/todoServiceByReactQuery";
 
 interface IListsContainer {
-  todoService: TodoService;
+    // todoService: TodoService
+    todoService: TodoServiceByReactQuery;
   todos: ITodo[];
   setTodos: (todos:  ITodo[]) => void;
   setEditTodo: (todo: ITodo) => void;
@@ -22,18 +26,18 @@ const ListsContainer = ({
 
   const [seletedTodo, setSeletedTodo] = useState<ITodo | null>(null);
 
-   // Todo 불러오기
-  const onLoadTodos = useCallback(async () => {
-    const getTodos = await todoService.getTodos();
-    if (!getTodos) return
-    setTodos(getTodos)
-  },[setTodos, todoService])
+  //  // Todo 불러오기
+  // const onLoadTodos = useCallback(async () => {
+  //   const getTodos = await todoService.getTodos();
+  //   if (!getTodos) return
+  //   setTodos(getTodos)
+  // },[setTodos, todoService])
 
-  useEffect(() => {
-    onLoadTodos()
-    const seletedTodo = localStorage.getItem("seletedTodo")
-    if (seletedTodo)  setSeletedTodo(JSON.parse(seletedTodo))
-  }, [onLoadTodos])
+  // useEffect(() => {
+  //   onLoadTodos()
+  //   const seletedTodo = localStorage.getItem("seletedTodo")
+  //   if (seletedTodo)  setSeletedTodo(JSON.parse(seletedTodo))
+  // }, [onLoadTodos])
 
   
   // Todo 목록 클릭
@@ -70,6 +74,32 @@ const ListsContainer = ({
     setSeletedTodo(null);
   }
 
+  const getUserWithAxios = async () => {
+    const config = {
+      headers: {
+        Authorization: "eyJhbGciOiJIUzI1NiJ9.dGVzdEBlbWFpbC5jb20.lyqnWJman9sexCDOIhvz_GRIaJcwRHH2Y9jWJ5ZIWmA"
+      }
+    }
+    const { data } = await axios.get('http://localhost:8080/todos/', config);
+    return data;
+  };
+
+
+  // React Query 적용 ////////////////
+
+  const { isLoading, isError, data, error } = useQuery(['todos'], () => todoService.getTodos<ITodo[]>() );
+  
+  if (isLoading) {
+    return <span>Loading...</span>
+  }
+
+  if (isError) {
+    if ( error instanceof Error)
+      return <span>Error: {error.message}</span>
+  }
+
+  ////////////////////////////////
+
 
   return(
     <RowBox
@@ -77,9 +107,10 @@ const ListsContainer = ({
       padding=".5rem"
     >
       <ListBox>
-        {todos.map(todo => {
+        {data && data.data.data.map(todo => {
           return (
           <List
+            key={todo.id}
             onClickTodo={onClickTodo}
             todo={todo} 
             onClickDeleteTodo={onClickDeleteTodo}

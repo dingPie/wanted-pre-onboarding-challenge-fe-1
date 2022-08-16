@@ -7,10 +7,12 @@ import TodoRouter from './pages/todo_page/TodoRouter';
 import GlobalStyle from './styles/GlobalStyles';
 import AuthService from './utils/service/authService';
 import TodoService from './utils/service/todoService';
+import TodoServiceByReactQuery from './utils/service/todoServiceByReactQuery';
 
 export interface IApp {
   authService: AuthService;
-  todoService: TodoService;
+  // todoService: TodoService;
+  todoService: TodoServiceByReactQuery;
 }
 
 function App({
@@ -22,6 +24,8 @@ function App({
 
   useEffect(() => {
     const getIdToken = localStorage.getItem("idToken");
+    // console.log("아이디값 확인", getIdToken)
+    todoService.setIdToken(getIdToken)
     if (!getIdToken) navigate('/auth', {replace: true});
   }, [navigate])
   
@@ -30,9 +34,9 @@ function App({
   return (
     <Box>
       <GlobalStyle />
-      <Header
+      {/* <Header
         todoService={todoService}
-      />
+      /> */}
       <Routes>
         <Route path="/" element={
           <TodoRouter
@@ -40,12 +44,12 @@ function App({
           />}
         />
 
-        <Route path="/auth" element={
+        {/* <Route path="/auth" element={
           <AuthRouter
             authService={authService}
             todoService={todoService}
           />}
-        />
+        /> */}
       </Routes>
     </Box>
   );
