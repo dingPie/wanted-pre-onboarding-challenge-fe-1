@@ -5,12 +5,23 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import theme from './styles/theme';
+
 import TodoService from './utils/service/todoService';
 import AuthService from './utils/service/authService';
+import TodoServiceByReactQuery from './utils/service/todoServiceByReactQuery';
+
+// scatch React Query
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
+
+const queryClient = new QueryClient();
 
 
-const todoService = new TodoService();
+const todoService = new TodoServiceByReactQuery();
+// const todoService = new TodoService();
 const authService = new AuthService();
+
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -18,11 +29,14 @@ const root = ReactDOM.createRoot(
 root.render(
   // <React.StrictMode>
     <BrowserRouter>
-      <ThemeProvider theme ={theme} >
-        <App 
-          todoService={todoService}
-          authService={authService}
-        />
+      <ThemeProvider theme={theme} >
+        <QueryClientProvider client={queryClient}>
+          <App
+            queryClient={queryClient}
+            todoService={todoService}
+            authService={authService}
+          />
+        </QueryClientProvider>
       </ThemeProvider>
     </BrowserRouter>
   // </React.StrictMode>

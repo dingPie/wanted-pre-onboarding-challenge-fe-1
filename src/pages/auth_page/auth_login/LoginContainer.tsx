@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { checkEmailForm, checkPwForm } from "../utils/auth_service";
 import { useNavigate } from "react-router-dom";
 import LoginPresenter from "./LoginPresenter";
-import AuthService from "../../../utils/service/authService";
-import TodoService from "../../../utils/service/todoService";
+import { IAuthRouter } from "../AuthRouter";
+import { useMutation } from "react-query";
 
-interface ILoginContainer {
-  authService: AuthService;
-  todoService: TodoService;
+interface ILoginContainer extends IAuthRouter {
   setIsOpenCreatePopup: (v: boolean) => void;
 }
 
@@ -16,6 +13,7 @@ interface ILoginContainer {
 const LoginContainer = ( {
   authService,
   todoService,
+  queryClient,
   setIsOpenCreatePopup,
 }: ILoginContainer ) => {
 
@@ -79,7 +77,17 @@ const LoginContainer = ( {
   }
 
   // 가입 팝업 호출
-  const onClickPopupCreateUser = () => setIsOpenCreatePopup(true)
+  const onClickPopupCreateUser = () => setIsOpenCreatePopup(true);
+
+  // React Query 적용 ////////////////
+   // Mutations
+  //  const mutation = useMutation(onClickLoginBtn, {
+  //   onSuccess: async () => {
+  //     queryClient.invalidateQueries("setIdToken");
+  //   }
+  //  })
+  ////////////////////////////////
+  
 
   
   return(

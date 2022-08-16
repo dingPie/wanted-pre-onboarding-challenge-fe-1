@@ -2,9 +2,13 @@ import React, {  useState } from "react";
 import { ITodo } from "../../../utils/types/dataType";
 import TodoService from "../../../utils/service/todoService";
 import InputPresenter from "./InputPresenter";
+import TodoServiceByReactQuery from "../../../utils/service/todoServiceByReactQuery";
+import { QueryClient, useMutation } from "react-query";
 
 interface IInputContainer {
-  todoService: TodoService
+    // todoService: TodoService
+  todoService: TodoServiceByReactQuery;
+  queryClient: QueryClient;
   todos: ITodo[];
   setTodos: (todos:  ITodo[]) => void;
 }
@@ -12,6 +16,7 @@ interface IInputContainer {
 
 const InputContainer = ( {
   todoService,
+  queryClient,
   todos,
   setTodos
 }: IInputContainer ) => {
@@ -37,12 +42,22 @@ const InputContainer = ( {
       alert("내용을 입력해주세요.")
       return
     }
-    const createdTodo = await todoService.createTodo(inputTitle, inputContent);
+    const createdTodo = await todoService.createTodo<ITodo>(inputTitle, inputContent);
     if (!createdTodo) return
-    setTodos([...todos, createdTodo])
+    setTodos([...todos, createdTodo.data])
     setInputTitle("")
     setInputContent("")
   }
+
+    // React Query 적용 ////////////////
+   // Mutations
+   const GET_TODOS = "getTodos";
+   const mutation = useMutation(onClickAddTodo, {
+    onSuccess: async () => {
+      queryClient.invalidateQueries(GET_TODOS);
+    }
+   })
+  ////////////////////////////////
 
   
 
@@ -52,7 +67,7 @@ const InputContainer = ( {
       inputContent={inputContent}
       onChangeInputTitle={onChangeInputTitle}
       onChangeInputContent={onChangeInputContent}
-      onClickAddTodo={onClickAddTodo}
+      onClickAddTodo={mutation.mutate}
     />
  )
 }

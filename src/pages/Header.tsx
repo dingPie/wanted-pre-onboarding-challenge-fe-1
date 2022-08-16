@@ -4,9 +4,10 @@ import { MainBtn } from "../components/Buttons";
 import { RowBox } from "../components/FlexBox";
 import Text from "../components/Text";
 import TodoService from "../utils/service/todoService";
+import TodoServiceByReactQuery from "../utils/service/todoServiceByReactQuery";
 
 interface IHeader {
-  todoService: TodoService;
+  todoService: TodoServiceByReactQuery;
 }
 
 const Header = ( {

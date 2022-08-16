@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { QueryClient } from 'react-query';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import AuthRouter from './pages/auth_page/AuthRouter';
@@ -6,30 +7,32 @@ import Header from './pages/Header';
 import TodoRouter from './pages/todo_page/TodoRouter';
 import GlobalStyle from './styles/GlobalStyles';
 import AuthService from './utils/service/authService';
-import TodoService from './utils/service/todoService';
+import TodoServiceByReactQuery from './utils/service/todoServiceByReactQuery';
 
 
 export interface IApp {
   authService: AuthService;
-  todoService: TodoService;
+  // todoService: TodoService;
+  todoService: TodoServiceByReactQuery;
+  queryClient: QueryClient
 }
 
 
 function App({
   authService,
-  todoService
+  todoService,
+  queryClient,
 }: IApp) {
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const getIdToken = localStorage.getItem("idToken");
+    todoService.setIdToken(getIdToken)
     if (!getIdToken) navigate('/auth', {replace: true});
   }, [navigate])
   
-  // merge Test
   
-
   return (
     <Box>
       <GlobalStyle />
@@ -40,6 +43,7 @@ function App({
         <Route path="/" element={
           <TodoRouter
             todoService={todoService}
+            queryClient={queryClient}
           />}
         />
 
@@ -47,6 +51,7 @@ function App({
           <AuthRouter
             authService={authService}
             todoService={todoService}
+            queryClient={queryClient}
           />}
         />
       </Routes>
