@@ -42,9 +42,10 @@ const InputContainer = ( {
       alert("내용을 입력해주세요.")
       return
     }
-    const createdTodo = await todoService.createTodo<ITodo>(inputTitle, inputContent);
-    if (!createdTodo) return
-    setTodos([...todos, createdTodo.data])
+    // const createdTodo = await todoService.createTodo<ITodo>(inputTitle, inputContent);
+    // if (!createdTodo) return
+    // setTodos([...todos, createdTodo.data])
+    addMutation.mutate(); // set 필요가 없다;
     setInputTitle("")
     setInputContent("")
   }
@@ -52,10 +53,12 @@ const InputContainer = ( {
     // React Query 적용 ////////////////
    // Mutations
    const GET_TODOS = "getTodos";
-   const mutation = useMutation(onClickAddTodo, {
+   const addMutation = useMutation( async () => todoService.createTodo<ITodo>(inputTitle, inputContent), {
     onSuccess: async () => {
       queryClient.invalidateQueries(GET_TODOS);
-    }
+      return queryClient.invalidateQueries(GET_TODOS)
+    },
+    
    })
   ////////////////////////////////
 
@@ -67,7 +70,7 @@ const InputContainer = ( {
       inputContent={inputContent}
       onChangeInputTitle={onChangeInputTitle}
       onChangeInputContent={onChangeInputContent}
-      onClickAddTodo={mutation.mutate}
+      onClickAddTodo={onClickAddTodo}
     />
  )
 }

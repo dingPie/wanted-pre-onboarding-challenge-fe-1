@@ -56,18 +56,18 @@ const EditContainer = ({
       alert("내용을 입력해주세요.")
       return
     }
-    const updatedTodo = await todoService.updateTodo<ITodo>(inputTitle, inputContent, editTodo);
-    if (!updatedTodo) return
-    const editedTodos = todos.map(todo => todo.id === editTodo.id ? updatedTodo.data : todo )
-    setTodos(editedTodos)
+    // const updatedTodo = await todoService.updateTodo<ITodo>(inputTitle, inputContent, editTodo);
+    // if (!updatedTodo) return
+    // const editedTodos = todos.map(todo => todo.id === editTodo.id ? updatedTodo.data : todo )
+    // setTodos(editedTodos)
+    editMutation.mutate();
     setEditTodo(null)
-    
   }
 
   // React Query 적용 ////////////////
    // Mutations
    const GET_TODOS = "getTodos";
-   const mutation = useMutation(onClickEditBtn, {
+   const editMutation = useMutation( () => todoService.updateTodo<ITodo>(inputTitle, inputContent, editTodo), {
     onSuccess: async () => {
       queryClient.invalidateQueries(GET_TODOS);
     }
@@ -85,7 +85,7 @@ const EditContainer = ({
     inputContent={inputContent}
     onChangeInputTitle={onChangeInputTitle}
     onChangeInputContent={onChangeInputContent}
-    onClickEditBtn={mutation.mutate}
+    onClickEditBtn={onClickEditBtn}
     onClickCancelBtn={onClickCancelBtn}
    /> 
   )

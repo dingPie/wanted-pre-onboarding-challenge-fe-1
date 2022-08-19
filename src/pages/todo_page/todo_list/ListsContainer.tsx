@@ -4,7 +4,7 @@ import { RowBox } from "../../../components/FlexBox";
 import { ITodo } from "../../../utils/types/dataType";
 import DetailTodo from "./DetailTodo";
 import List from "./List";
-import { QueryClient, useQuery } from "react-query";
+import { QueryClient, useMutation, useQuery } from "react-query";
 import TodoServiceByReactQuery from "../../../utils/service/todoServiceByReactQuery";
 
 interface IListsContainer {
@@ -60,9 +60,11 @@ const ListsContainer = ({
     if (!confirm) return
 
     if(seletedTodo) setSeletedTodo(null);
-    const deleteTodo = await todoService.deleteTodo(todo);
-    if(!deleteTodo) return
+    // const deleteTodo = await todoService.deleteTodo(todo);
+    // if(!deleteTodo) return
+    deleteMutation.mutate(todo); // useMutation 사용
     
+
     const targetId = todo.id;
     const deletedTodo = todos.filter(todo => todo.id !== targetId );
     setTodos(deletedTodo);
@@ -79,23 +81,20 @@ const ListsContainer = ({
 
   const GET_TODOS = "getTodos";
   // React Query 적용 ////////////////
-  const { isLoading, isError, data, error } = useQuery([GET_TODOS], () => todoService.getTodos<ITodo[]>() );
+  const { isError, data, error } = useQuery([GET_TODOS], () => todoService.getTodos<ITodo[]>() );
   
-  if (isLoading) {
-    return <span>Loading...</span>
-  }
-
   if (isError) {
     if ( error instanceof Error)
       return <span>Error: {error.message}</span>
   }
-  // 삭제버튼 React Query 적용: 실패...
-  // const mutation = useMutation(onClickDeleteTodo, {
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries("getTodos");
-  //   }
-  //  })
-  ////////////////////////////////
+
+  const deleteMutation = useMutation( async (todo: ITodo) => todoService.deleteTodo(todo), 
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(GET_TODOS);
+      }
+    }
+   )
 
 
   return(
