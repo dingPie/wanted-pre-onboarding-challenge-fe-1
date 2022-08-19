@@ -18,7 +18,8 @@ const queryClient = new QueryClient({
     queries : {
         refetchOnWindowFocus : false, // 이거 없으면 클릭시마다 refresh
         refetchOnMount : false,
-        retry : false
+        retry : false,
+        suspense: true,
       }
   }
 });

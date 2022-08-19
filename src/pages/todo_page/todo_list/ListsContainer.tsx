@@ -22,7 +22,7 @@ const ListsContainer = ({
 }: IListsContainer) => {
   const [selectedTodo, setSelectedTodo] = useState<ITodo | null>(null);
   
-  const { isError, data, error } = useQuery([GET_TODOS], () => todoService.getTodos<ITodo[]>(), {
+  const { data } = useQuery([GET_TODOS], () => todoService.getTodos<ITodo[]>(), {
     staleTime: 0,
     cacheTime: 5000
   } );
@@ -65,9 +65,6 @@ const ListsContainer = ({
     setEditTodo(todo);
     setSelectedTodo(null);
   }, [selectedTodo])
-
-  if (isError && error instanceof Error)
-    return <span>Error: {error.message}</span>
 
 
   return(
