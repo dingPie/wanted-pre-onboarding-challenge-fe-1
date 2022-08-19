@@ -1,6 +1,10 @@
 import axios from "axios";
 
-
+/**
+* @class
+* @async
+* 유저 가입 검증 관련된 동작
+*/
 class AuthService {
 
   private baseUrl: string;
@@ -10,7 +14,12 @@ class AuthService {
   }
   
 
-  // 로그인
+  /**
+   * 로그인
+   * @param inputEmail 이메일
+   * @param inputPw 비밀번호 
+   * @returns tokenId
+   */
   async login ( inputEmail: string, inputPw: string ): Promise<string | null>  {
     const params = { email: inputEmail, password: inputPw }
 
@@ -25,7 +34,12 @@ class AuthService {
   }
 
 
-  // 회원가입
+  /**
+   * 회원가입
+   * @param inputEmail 이메일
+   * @param inputPw 비밀번호
+   * @returns tokenId
+   */
   async signUp ( inputEmail: string, inputPw: string ): Promise<string | null>  {
     const params = { email: inputEmail, password: inputPw }
 

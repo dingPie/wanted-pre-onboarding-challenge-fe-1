@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import styled from "styled-components";
 import { MainBtn } from "../../../components/Buttons";
 import { RowBox } from "../../../components/FlexBox";
@@ -47,7 +47,7 @@ const List = ({
   )
 }
 
-export default List;
+export default memo(List);
 
 export const TodoBox = styled(RowBox)`
   display: grid;

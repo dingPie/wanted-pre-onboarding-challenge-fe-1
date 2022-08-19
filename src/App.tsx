@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { QueryClient } from 'react-query';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -27,9 +27,9 @@ function App({
   const navigate = useNavigate();
 
   useEffect(() => {
-    const getIdToken = localStorage.getItem("idToken");
-    todoService.setIdToken(getIdToken)
-    if (!getIdToken) navigate('/auth', {replace: true});
+    const getIdTokenFromLocal = localStorage.getItem("idToken");
+    todoService.setIdToken(getIdTokenFromLocal)
+    if (!getIdTokenFromLocal) navigate('/auth', {replace: true});
   }, [navigate])
   
   
@@ -39,22 +39,24 @@ function App({
       <Header
         todoService={todoService}
       />
-      <Routes>
-        <Route path="/" element={
-          <TodoRouter
-            todoService={todoService}
-            queryClient={queryClient}
-          />}
-        />
+      <Suspense fallback={<div>loading</div>}>
+        <Routes>
+          <Route path="/" element={
+            <TodoRouter
+              todoService={todoService}
+              queryClient={queryClient}
+            />}
+          />
 
-        <Route path="/auth" element={
-          <AuthRouter
-            authService={authService}
-            todoService={todoService}
-            queryClient={queryClient}
-          />}
-        />
-      </Routes>
+          <Route path="/auth" element={
+            <AuthRouter
+              authService={authService}
+              todoService={todoService}
+              queryClient={queryClient}
+            />}
+          />
+        </Routes>
+      </Suspense>
     </Box>
   );
 }

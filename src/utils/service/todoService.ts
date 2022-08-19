@@ -1,6 +1,10 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { ITodo } from "../types/dataType";
 
+/**
+ * @class
+ * todo CRUD service
+ */
 class TodoService {
 
   private idToken: string | null;

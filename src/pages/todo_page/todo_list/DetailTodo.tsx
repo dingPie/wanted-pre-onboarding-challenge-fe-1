@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { MainBtn } from "../../../components/Buttons";
 import { ColBox, RowBox } from "../../../components/FlexBox";
 import Text from "../../../components/Text";
@@ -58,4 +58,4 @@ const DetailTodo = ({
   )
 }
 
-export default DetailTodo;
+export default memo(DetailTodo);
