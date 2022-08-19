@@ -3,7 +3,6 @@
 
 ## 실제 구현 화면
 
-<br>
 
 ### login(auth) 구현 화면
 ![KakaoTalk_20220820_025942716](https://user-images.githubusercontent.com/82368684/185679648-29f5b188-b317-40d5-b3e0-c9e78c05f625.gif)
@@ -11,6 +10,7 @@
 ### todos 구현 화면 
  ![KakaoTalk_20220820_025948830](https://user-images.githubusercontent.com/82368684/185679738-8bf79f66-4d0d-46c6-be8a-7a735b60b946.gif)
 
+<br>
 
 ## 사용한 패키지 (라이브러리)
 
