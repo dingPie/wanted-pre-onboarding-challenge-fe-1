@@ -114,3 +114,7 @@ React Query 적용 덕에 관리해야 할 상태도 줄고, 전체적으로 코
 `useMutation` 또한 hooks 형태이기 때문에 일반 함수 내부에서 선언이 어렵다. <br>
 `useMutation` 을 외부로 분리하여 사용하는 부분 또한 hooks가 불필요하게 중첩된다고 생각한다. 
 그럼, 해당 부분을 어떻게 사용해아 읽고 쓰기 쉽게 작성할 수 있을까?
+<br>
+
+![image](https://user-images.githubusercontent.com/82368684/185665750-4cf78f25-a4a1-4497-a7fe-f26dbf1191b6.png)
+
