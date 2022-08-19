@@ -29,8 +29,6 @@ const TodoRouter = ( {
     <InputContainer 
       queryClient={queryClient}
       todoService={todoService}
-      todos={todos}
-      setTodos={setTodos}
     />
     <ListsContainer
       queryClient={queryClient}
@@ -43,8 +41,6 @@ const TodoRouter = ( {
       <EditContainer
         queryClient={queryClient}
         todoService={todoService}
-        todos={todos}
-        setTodos={setTodos}
         editTodo={editTodo}
         setEditTodo={setEditTodo}
       />

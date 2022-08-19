@@ -4,37 +4,34 @@ import TodoService from "../../../utils/service/todoService";
 import InputPresenter from "./InputPresenter";
 import TodoServiceByReactQuery from "../../../utils/service/todoServiceByReactQuery";
 import { QueryClient, useMutation } from "react-query";
+import { GET_TODOS } from "../../../utils/const";
 
 interface IInputContainer {
-    // todoService: TodoService
   todoService: TodoServiceByReactQuery;
   queryClient: QueryClient;
-  todos: ITodo[];
-  setTodos: (todos:  ITodo[]) => void;
 }
 
 
 const InputContainer = ( {
   todoService,
   queryClient,
-  todos,
-  setTodos
 }: IInputContainer ) => {
 
   const [inputTitle, setInputTitle] = useState("")
   const [inputContent, setInputContent] = useState("")
 
   // change Input Title
-  const onChangeInputTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeInputTitle = (e: React.ChangeEvent<HTMLInputElement>) => 
     setInputTitle(e.target.value)
-  }
-
 
   // change Input Content
-  const onChangeInputContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const onChangeInputContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => 
     setInputContent(e.target.value)
-  }
 
+  // todo 추가 React Query
+  const addMutation = useMutation( async ([title, content]: string[]) => todoService.createTodo<ITodo>(title, content), {
+    onSuccess: async () => queryClient.invalidateQueries(GET_TODOS)
+  })
   
   // 추가 버튼 클릭
   const onClickAddTodo = async () => {
@@ -42,27 +39,11 @@ const InputContainer = ( {
       alert("내용을 입력해주세요.")
       return
     }
-    // const createdTodo = await todoService.createTodo<ITodo>(inputTitle, inputContent);
-    // if (!createdTodo) return
-    // setTodos([...todos, createdTodo.data])
-    addMutation.mutate(); // set 필요가 없다;
+    addMutation.mutate([inputTitle, inputContent]); // set 필요가 없다;
     setInputTitle("")
     setInputContent("")
   }
 
-    // React Query 적용 ////////////////
-   // Mutations
-   const GET_TODOS = "getTodos";
-   const addMutation = useMutation( async () => todoService.createTodo<ITodo>(inputTitle, inputContent), {
-    onSuccess: async () => {
-      queryClient.invalidateQueries(GET_TODOS);
-      return queryClient.invalidateQueries(GET_TODOS)
-    },
-    
-   })
-  ////////////////////////////////
-
-  
 
   return(
     <InputPresenter 

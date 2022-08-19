@@ -27,9 +27,9 @@ function App({
   const navigate = useNavigate();
 
   useEffect(() => {
-    const getIdToken = localStorage.getItem("idToken");
-    todoService.setIdToken(getIdToken)
-    if (!getIdToken) navigate('/auth', {replace: true});
+    const getIdTokenFromLocal = localStorage.getItem("idToken");
+    todoService.setIdToken(getIdTokenFromLocal)
+    if (!getIdTokenFromLocal) navigate('/auth', {replace: true});
   }, [navigate])
   
   
