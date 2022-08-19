@@ -4,7 +4,7 @@ import TodoService from "../../../utils/service/todoService";
 import InputPresenter from "./InputPresenter";
 import TodoServiceByReactQuery from "../../../utils/service/todoServiceByReactQuery";
 import { QueryClient, useMutation } from "react-query";
-import { GET_TODOS } from "../../../utils/const";
+import { GET_TODOS } from "../../../utils/types/const";
 
 interface IInputContainer {
   todoService: TodoServiceByReactQuery;

@@ -3,7 +3,7 @@ import { ITodo } from "../../../utils/types/dataType";
 import EditPresenter from "./EditPresenter";
 import TodoServiceByReactQuery from "../../../utils/service/todoServiceByReactQuery";
 import { QueryClient, useMutation } from "react-query";
-import { GET_TODOS } from "../../../utils/const";
+import { GET_TODOS } from "../../../utils/types/const";
 
 interface IEditContainer {
   todoService: TodoServiceByReactQuery;

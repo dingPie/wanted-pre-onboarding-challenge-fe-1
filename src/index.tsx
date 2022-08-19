@@ -12,9 +12,16 @@ import TodoServiceByReactQuery from './utils/service/todoServiceByReactQuery';
 
 // scatch React Query
 import { QueryClient, QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions : {
+    queries : {
+        refetchOnWindowFocus : false, // 이거 없으면 클릭시마다 refresh
+        refetchOnMount : false,
+        retry : false
+      }
+  }
+});
 
 
 const todoService = new TodoServiceByReactQuery();
